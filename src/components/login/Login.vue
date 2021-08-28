@@ -22,7 +22,8 @@
             return{
                 ruleForm: {
                     username: '', //用户名
-                    password: ''  //密码
+                    password: '',  //密码
+                    name: ''
                 },
                     rules: {
                         username: [
