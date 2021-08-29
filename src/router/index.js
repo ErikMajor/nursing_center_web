@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import NursingLevel from "../components/nursing_manage/NursingLevel";
 
 Vue.use(Router)
 const router = new Router({
@@ -20,7 +19,7 @@ const router = new Router({
                 },
                 {
                     path: 'nursingLevel',
-                    component: NursingLevel
+                    component: () => import('@/components/nursing_manage/NursingLevel')
                 }
             ]
         },
