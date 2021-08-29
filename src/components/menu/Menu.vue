@@ -94,7 +94,7 @@
 
 <script>
 export default {
-  name: "menu",
+
   data() {
     return {
     }

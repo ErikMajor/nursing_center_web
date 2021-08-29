@@ -1,10 +1,10 @@
 <template>
     <div class="home">
         <div class="con">
-            <span class="title" @click="index">东软颐养中心</span>
+            <span class="title" >东软颐养中心</span>
             <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"></el-avatar>
             <span class="operate">{{user.username}}</span>
-            <el-button type="info" icon="el-icon-switch-button" circle @click="exit" ></el-button>
+            <el-button type="info" icon="el-icon-switch-button"  ></el-button>
         </div>
     </div>
 </template>
