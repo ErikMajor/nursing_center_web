@@ -20,7 +20,7 @@
           <span>客户管理</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="/" >入住管理</el-menu-item>
+          <el-menu-item index="/main/checkin" >入住管理</el-menu-item>
           <el-menu-item index="1-2">退住管理</el-menu-item>
           <el-menu-item index="1-3">外出管理</el-menu-item>
         </el-menu-item-group>

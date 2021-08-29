@@ -1,14 +1,16 @@
 <template>
-  <el-container>
-    <el-header style="text-align: center;">
-      <el-autocomplete
-          v-model="state"
-          :fetch-suggestions="queryCustomer"
-          placeholder="输入客户名称"
-          @select="handleSelect"
-      ></el-autocomplete>
-    </el-header>
-  </el-container>
+  <div>
+    <el-container>
+      <el-header style="text-align: center;">
+        <el-autocomplete
+            v-model="state"
+            :fetch-suggestions="queryCustomer"
+            placeholder="输入客户名称"
+            @select="handleSelect"
+        ></el-autocomplete>
+      </el-header>
+    </el-container>
+  </div>
 </template>
 
 <script>

@@ -14,8 +14,7 @@ const router = new Router({
             component: () => import('@/components/main/Main'),
             children: [
                 {
-                    path: '/checkin',
-                    name: 'checkin',
+                    path: 'checkin',
                     component: () => import('@/components/customer_manage/checkin/Checkin'),
                 },
             ]
