@@ -4,7 +4,7 @@ import Router from 'vue-router'
 import Login from '../components/login/Login'
 import Main from '../components/main/Main'
 import BedManage from '../components/bedManage/BedManage'
-import MealCanlender from '../components/mealManage/MealCanlender'
+import MealCalender from '../components/mealManage/MealCanlender'
 import MealRecords from '../components/mealManage/MealRecords'
 import UserMealManage from '../components/mealManage/UserMealManage'
 import MealList from '../components/mealManage/MealList'
@@ -20,14 +20,18 @@ const router = new Router({
         {
             path: '/main',
             component: Main,
-            children:[
+            children: [
+                {
+                    path: 'checkin',
+                    component: () => import('@/components/customer_manage/checkin/Checkin')
+                },
                 {
                     path: 'bedManage',
                     component: BedManage
                 },
                 {
-                    path: 'mealCanlender',
-                    component: MealCanlender
+                    path: 'mealCalender',
+                    component: MealCalender
                 },
                 {
                     path: 'mealRecords',
@@ -41,7 +45,7 @@ const router = new Router({
                     path: 'mealList/:id',
                     component: MealList
                 }
-                ]
+            ]
         },
 
     ]
