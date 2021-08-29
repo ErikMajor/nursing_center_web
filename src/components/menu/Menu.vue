@@ -1,14 +1,15 @@
 <template>
   <div>
     <el-menu
-        :default-active="active"
+        :default-active="$route.path"
+        :router="true"
         active-text-color="#ffd04b"
         background-color="#545c64"
         class="el-menu-vertical"
         text-color="#fff"
         @select="handleSelect"
     >
-      <el-menu-item index="1">
+      <el-menu-item index="/main">
         <i class="el-icon-s-home"></i>
         <span slot="title">首页</span>
       </el-menu-item>
@@ -19,7 +20,7 @@
           <span>客户管理</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="1-1">入住管理</el-menu-item>
+          <el-menu-item index="/" >入住管理</el-menu-item>
           <el-menu-item index="1-2">退住管理</el-menu-item>
           <el-menu-item index="1-3">外出管理</el-menu-item>
         </el-menu-item-group>
@@ -96,7 +97,6 @@ export default {
   name: "menu",
   data() {
     return {
-      active: 1,
     }
   },
   methods: {
