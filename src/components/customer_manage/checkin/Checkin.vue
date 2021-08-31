@@ -11,8 +11,20 @@
         ></el-input>
       </el-header>
       <el-main>
-        <customer :customer="this.name"/>
+        <ul>
+          <div v-for="customer in this.rows" :key="customer.id" style="margin: 2%">
+            <customer :data="customer"/>
+          </div>
+        </ul>
       </el-main>
+      <el-footer>
+        <div class="block">
+          <el-pagination
+              layout="prev, pager, next"
+              :total="50">
+          </el-pagination>
+        </div>
+      </el-footer>
     </el-container>
   </div>
 </template>
@@ -29,12 +41,14 @@ export default {
     return {
       rows: [],
       name: '',
-      timeout: null
+      timeout: null,
+      pages: 10,
     }
   },
   methods: {
     async search() {
       let data = []
+      let total = 0
       await axios.get('http://localhost:8081/checkin/queryByName/1',{
         params: {
           name: this.name.toString()
@@ -42,10 +56,12 @@ export default {
       })
       .then(function (response) {
         data = response.data.customers
-        console.log(response)
+        total = response.data.pages
       })
       this.rows = data
-      console.log(this.rows[0])
+      this.pages = total
+      this.pages = 10
+      console.log(this.rows)
     }
   },
   mounted() {
