@@ -3,7 +3,7 @@
         <el-card class="box-card">
             <el-form :inline="true" :model="formInline" class="demo-form-inline">
                 <el-form-item label="用户信息">
-                    <el-input style="margin-left: 10px;float: left;width: 150px" v-model="staffName" placeholder="请输入客户姓名"></el-input>
+                    <el-input style="margin-left: 10px;float: left;width: 150px" v-model="staffName" placeholder="请输入用户姓名"></el-input>
                     <el-button type="primary" style="margin-left: 10px;" @click="queryUser">查询</el-button>
                     <el-button type="primary" style="margin-left: 10px;" @click="getAllCustomer">所有客户</el-button>
                 </el-form-item>
@@ -94,14 +94,15 @@
                     <el-input v-model="ruleForm.staffName"></el-input>
                 </el-form-item>
                 <el-form-item label="性别" prop="staffSex">
-                    <el-select v-model="value" clearable placeholder="请选择" style="width: 100%">
-                        <el-option
-                                v-for="item in options"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value">
-                        </el-option>
-                    </el-select>
+                    <el-input v-model="ruleForm.staffSex"></el-input>
+<!--                    <el-select v-model="value" clearable placeholder="请选择" style="width: 100%">-->
+<!--                        <el-option-->
+<!--                                v-for="item in options"-->
+<!--                                :key="item.value"-->
+<!--                                :label="item.label"-->
+<!--                                :value="item.value">-->
+<!--                        </el-option>-->
+<!--                    </el-select>-->
                 </el-form-item>
                 <el-form-item label="年龄" prop="staffAge">
                     <el-input v-model="ruleForm.staffAge"></el-input>
@@ -138,13 +139,22 @@
                     staffName:'',
                     staffSex:'',
                     staffAge:'',
+                    staffNumber:'',
+                    staffType:'',
+                    phoneNumber:''
                 },
                 formTitle:'',
                 ruleForm: {
                     id:'',
+                    createBy:'',
+                    createDate:'',
+                    updateBy:'',
                     staffName:'',
                     staffSex:'',
                     staffAge:'',
+                    staffNumber:'',
+                    staffType:'',
+                    phoneNumber:''
                 },
                 options: [{
                     value: '男',
@@ -183,6 +193,9 @@
                 this.ruleForm.staffName = row.staffName
                 this.ruleForm.staffSex = row.staffSex
                 this.ruleForm.staffAge = row.staffAge
+                this.ruleForm.staffNumber = row.staffName
+                this.ruleForm.staffType = row.staffType
+                this.ruleForm.phoneNumber = row.phoneNumber
             },
             //删除
 

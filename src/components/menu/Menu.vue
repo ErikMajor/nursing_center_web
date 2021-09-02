@@ -81,7 +81,7 @@
         </el-menu-item-group>
       </el-submenu>
 
-      <el-menu-item index="8">
+      <el-menu-item index="/">
         <i class="el-icon-s-release"></i>
         <span slot="title">退出</span>
       </el-menu-item>

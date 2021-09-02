@@ -55,6 +55,7 @@
                 </el-col>
             </el-row >
             <el-button @click="register">注册</el-button>
+            <el-button @click="back">返回</el-button>
         </el-form>
     </div>
 </template>
@@ -116,6 +117,9 @@
                         })
                     }
                 })
+            },
+            back(){
+                this.$router.push(`/`)
             }
         }
     }
