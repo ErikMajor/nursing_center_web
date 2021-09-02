@@ -121,11 +121,18 @@
                                 })
                             }
                         })
+
                         this.updateRoomId()
                         this.searchBeds()
                         this.dialogVisible = false
                     }
                     })
+                // this.bedList.roomNumber = parseInt(this.form.roomNumber)
+                // console.log(this.bedList+"测试")
+                // let path2 = `http://localhost:8081/bedManage/searchBeds`
+                // this.$ajax.post(path2,this.bedList).then(res=>{
+                //     this.bedList = res.data
+                // })
 
 
 
