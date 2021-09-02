@@ -1,72 +1,77 @@
 <template>
     <div>
-        <el-form :inline="true" :model="formInline" class="demo-form-inline">
-            <el-form-item label="用户信息">
-            </el-form-item>
-        </el-form>
+        <el-card class="box-card">
+            <el-form :inline="true" :model="formInline" class="demo-form-inline">
+                <el-form-item label="用户信息">
+                    <el-input style="margin-left: 10px;float: left;width: 150px" v-model="staffName" placeholder="请输入客户姓名"></el-input>
+                    <el-button type="primary" style="margin-left: 10px;" @click="queryUser">查询</el-button>
+                    <el-button type="primary" style="margin-left: 10px;" @click="getAllCustomer">所有客户</el-button>
+                </el-form-item>
+            </el-form>
 
-        <el-table
-                v-loading = "loading"
-                :data="pageInfo.list"
-                style="width: 100%">
-            <el-table-column
-                    type="index"
-                    width="50">
-            </el-table-column>
-            <el-table-column
-                    label="姓名"
-                    width="100px"
-                    prop="staffName">
-            </el-table-column>
-            <el-table-column
-                    label="创建者"
-                    width="120px"
-                    prop="createBy">
-            </el-table-column>
-            <el-table-column
-                    label="创建时间"
-                    width="200px">
-                <template slot-scope="scope">
-                    {{scope.row.createDate|convertDate}}
-                </template>
-            </el-table-column>
-            <el-table-column
-                    label="更新者"
-                    width="120px"
-                    prop="updateBy">
-            </el-table-column>
-            <el-table-column
-                    label="更新时间"
-                    width="200px">
-                <template slot-scope="scope">
-                    {{scope.row.updateDate|convertDate}}
-                </template>
-            </el-table-column>
-            <el-table-column
-                    label="性别"
-                    width="120px"
-                    prop="staffSex">
-            </el-table-column>
-            <el-table-column
-                    label="年龄"
-                    width="120px"
-                    prop="staffAge">
-            </el-table-column>
+            <el-table
+                    v-loading = "loading"
+                    :data="pageInfo"
+                    style="width: 100%">
+    <!--            <el-table-column-->
+    <!--                    type="index"-->
+    <!--                    width="50">-->
+    <!--            </el-table-column>-->
+                <el-table-column
+                        label="姓名"
+                        width="100px"
+                        prop="staffName">
+                </el-table-column>
+                <el-table-column
+                        label="创建者"
+                        width="120px"
+                        prop="createBy">
+                </el-table-column>
+                <el-table-column
+                        label="创建时间"
+                        width="200px">
+                    <template slot-scope="scope">
+                        {{scope.row.createDate|convertDate}}
+                    </template>
+                </el-table-column>
+                <el-table-column
+                        label="更新者"
+                        width="120px"
+                        prop="updateBy">
+                </el-table-column>
+                <el-table-column
+                        label="更新时间"
+                        width="200px">
+                    <template slot-scope="scope">
+                        {{scope.row.updateDate|convertDate}}
+                    </template>
+                </el-table-column>
+                <el-table-column
+                        label="性别"
+                        width="120px"
+                        prop="staffSex">
+                </el-table-column>
+                <el-table-column
+                        label="年龄"
+                        width="120px"
+                        prop="staffAge">
+                </el-table-column>
 
-            <el-table-column
-                    align="right">
-                <template slot-scope="scope">
-                    <el-button
-                            size="mini"
-                            @click="handleEdit(scope.row)">编辑</el-button>
-                    <el-button
-                            size="mini"
-                            type="danger"
-                            @click="handleDelete(scope.row.id)">删除</el-button>
-                </template>
-            </el-table-column>
-        </el-table>
-
+                <el-table-column
+                        label="操作"
+                        align="right">
+                    <template slot-scope="scope">
+                        <el-button
+                                size="mini"
+                                @click="handleEdit(scope.row)">编辑</el-button>
+                        <el-button
+                                size="mini"
+                                type="danger"
+                                @click="handleDelete(scope.row.id)">删除</el-button>
+                    </template>
+                </el-table-column>
+            </el-table>
+        </el-card>
 
 
         <el-pagination
@@ -88,19 +93,27 @@
                 <el-form-item label="用户姓名" prop="staffName">
                     <el-input v-model="ruleForm.staffName"></el-input>
                 </el-form-item>
-                <el-form-item label="用户姓名" prop="staffSex">
-                    <el-input v-model="ruleForm.staffSex"></el-input>
+                <el-form-item label="性别" prop="staffSex">
+                    <el-select v-model="value" clearable placeholder="请选择" style="width: 100%">
+                        <el-option
+                                v-for="item in options"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value">
+                        </el-option>
+                    </el-select>
                 </el-form-item>
-                <el-form-item label="用户姓名" prop="staffAge">
+                <el-form-item label="年龄" prop="staffAge">
                     <el-input v-model="ruleForm.staffAge"></el-input>
                 </el-form-item>
-                <el-form-item>
+                <el-form-item >
                     <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
                     <el-button @click="resetForm('ruleForm')">重置</el-button>
                 </el-form-item>
             </el-form>
         </el-dialog>
     </div>
+
 </template>
 <script>
     //引入日期格式化包
@@ -109,6 +122,9 @@
         data() {
             return {
                 pageInfo:[],
+                array:{
+                    id:''
+                },
                 loading:false,
                 dialogVisible:false,
                 currPage:1,
@@ -129,8 +145,17 @@
                     staffName:'',
                     staffSex:'',
                     staffAge:'',
-                    levelStatus:false
                 },
+                options: [{
+                    value: '男',
+                    label: '男',
+
+                }, {
+                    value: '女',
+                    label: '女',
+                }],
+                staffName:'',
+                staffSex:''
             }
         },
         created() {
@@ -139,7 +164,7 @@
         methods: {
             getData(){
                 this.loading = true
-                let path = `http://localhost:8081/userManage/queryAll/${this.currPage}`
+                let path = `http://localhost:8081/userManage/selectAll`
                 this.$ajax.post(path,this.formInline).then(res=>{
                     this.pageInfo = res.data
                     this.loading = false
@@ -229,6 +254,7 @@
 </script>
 
 <style scoped>
+
     .header {
         margin-bottom: 10px;
     }
