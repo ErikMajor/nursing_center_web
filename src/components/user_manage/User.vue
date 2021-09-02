@@ -52,6 +52,7 @@
                     width="120px"
                     prop="staffAge">
             </el-table-column>
+
             <el-table-column
                     align="right">
                 <template slot-scope="scope">
@@ -85,7 +86,13 @@
                 :before-close="addHandleClose">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm" v-if="dialogVisible">
                 <el-form-item label="用户姓名" prop="staffName">
-                    <el-input v-model="ruleForm.levelName"></el-input>
+                    <el-input v-model="ruleForm.staffName"></el-input>
+                </el-form-item>
+                <el-form-item label="用户姓名" prop="staffSex">
+                    <el-input v-model="ruleForm.staffSex"></el-input>
+                </el-form-item>
+                <el-form-item label="用户姓名" prop="staffAge">
+                    <el-input v-model="ruleForm.staffAge"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
@@ -107,15 +114,18 @@
                 currPage:1,
                 search: '',
                 formInline:{
-                    staffName:''
-                },
-                formTitle:'',
-                ruleForm: {
                     id:'',
                     createBy:'',
                     createDate:'',
                     updateBy:'',
                     updateDate:'',
+                    staffName:'',
+                    staffSex:'',
+                    staffAge:'',
+                },
+                formTitle:'',
+                ruleForm: {
+                    id:'',
                     staffName:'',
                     staffSex:'',
                     staffAge:'',
