@@ -6,7 +6,7 @@
   >
     <el-row :align="align" :gutter="20" :justify="justify">
       <el-col :span="4">
-        头像还没写
+
       </el-col>
       <el-col :span="10">
         <el-row justify="center">
