@@ -32,7 +32,7 @@
                         <td>
                             <p>{{weekNum}}</p>
                         </td>
-                        <td class="courses" v-for="(lesson, lessonIndex) in classTableData.lessons" :key="lessonIndex" @click="gain(weekNum,lesson)">
+                        <td class="courses" style="height: 50px" v-for="(lesson, lessonIndex) in classTableData.lessons" :key="lessonIndex" @click="gain(weekNum,lesson)">
 
                             <div v-if="weekNum===row&&lesson===col">
                                 <el-row class="h2" v-for="(m, index1) in foodRow" :key="index1" style="margin-top: 8px">
