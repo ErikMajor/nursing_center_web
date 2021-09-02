@@ -44,11 +44,6 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column
-                    prop="companyInfo.name"
-                    label="公司名称"
-                    width="180">
-            </el-table-column>
             <el-table-column label="性别" width="50">
                 <template slot-scope="scope">
                     <!--{{scope.row.sex==='0'?'男':'女'}}-->
@@ -59,37 +54,48 @@
                     prop="age"
                     label="年龄"
                     width="50">
-                <template slot-scope="scope">
-                    <!--{{scope.row.sex==='0'?'男':'女'}}-->
-                    {{scope.row.sex|formatSex}}
-                </template>
             </el-table-column>
             <el-table-column
                     prop="type"
                     label="员工类别"
                     width="50">
             </el-table-column>
-            <el-table-column
-                    prop="salary"
-                    label="薪水"
-                    width="180">
-            </el-table-column>
-            <el-table-column label="是否热门">
-                <template slot-scope="scope">
-                    <el-switch
-                            v-model="scope.row.isHot"
-                            active-color="#13ce66"
-                            inactive-color="#ff4949"
-                            active-value="1"
-                            inactive-value="0"
-                            @change="handleChange(scope.row)">
-                    </el-switch>
-                </template>
-            </el-table-column>
-            <el-table-column label="发布时间">
+<!--            <el-table-column label="是否热门">-->
+<!--                <template slot-scope="scope">-->
+<!--                    <el-switch-->
+<!--                            v-model="scope.row.isHot"-->
+<!--                            active-color="#13ce66"-->
+<!--                            inactive-color="#ff4949"-->
+<!--                            active-value="1"-->
+<!--                            inactive-value="0"-->
+<!--                            @change="handleChange(scope.row)">-->
+<!--                    </el-switch>-->
+<!--                </template>-->
+<!--            </el-table-column>-->
+            <el-table-column label="入职时间">
                 <template slot-scope="scope">
                     {{scope.row.addDate|convertDate}}
                 </template>
+            </el-table-column>
+            <el-table-column
+                    prop="type"
+                    label="职务"
+                    width="50">
+            </el-table-column>
+            <el-table-column
+                    prop="type"
+                    label="职称"
+                    width="50">
+            </el-table-column>
+            <el-table-column
+                    prop="type"
+                    label="手机号码"
+                    width="50">
+            </el-table-column>
+            <el-table-column
+                    prop="type"
+                    label="简介"
+                    width="50">
             </el-table-column>
             <el-table-column label="操作" width="200">
                 <template slot-scope="scope">
@@ -145,7 +151,7 @@
                 })
             },
             handleAdd(){
-                this.$router.push('/main/postAdd')
+                this.$router.push('/main/userAdd')
             },
             handleCurrentChange(val){
                 this.currPage = val
