@@ -77,9 +77,7 @@
           <span>用户管理</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="1-1">护士管理</el-menu-item>
-          <el-menu-item index="1-2">护工管理</el-menu-item>
-          <el-menu-item index="1-2">医生管理</el-menu-item>
+          <el-menu-item index="/main/user">用户管理</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
 
