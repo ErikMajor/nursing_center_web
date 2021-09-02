@@ -12,6 +12,10 @@ import UserMealManage from '../components/mealManage/UserMealManage'
 import MealList from '../components/mealManage/MealList'
 import User from "../components/user_manage/User";
 import UserImport from "../components/user_manage/UserImport";
+import NursingContent from "../components/nursing_manage/NursingContent";
+import NursingContentAdd from "../components/nursing_manage/NursingContentAdd";
+import NursingLevel from "../components/nursing_manage/NursingLevel";
+import NursingRecords from "../components/nursing_manage/NursingRecords";
 
 
 Vue.use(Router)
@@ -73,7 +77,24 @@ const router = new Router({
                 {
                     path: 'userImport',
                     component: UserImport
-                }
+                },
+                {
+                    path: 'nursingContent',
+                    component: NursingContent
+                },
+                {
+                    path: 'nursingContentAdd',
+                    component: NursingContentAdd
+                },
+                {
+                    path: 'nursingLevel',
+                    component: NursingLevel
+                },
+                {
+                    path: 'nursingRecords',
+                    component: NursingRecords
+                },
+
             ]
         },
 

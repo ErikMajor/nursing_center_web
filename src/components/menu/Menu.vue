@@ -42,9 +42,9 @@
           <span>护理管理</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="4-1">护理级别管理</el-menu-item>
-          <el-menu-item index="4-2">护理记录管理</el-menu-item>
-          <el-menu-item index="4-3">护理内容管理</el-menu-item>
+          <el-menu-item index="/main/nursingLevel">护理级别管理</el-menu-item>
+          <el-menu-item index="/main/nursingContent">护理内容管理</el-menu-item>
+          <el-menu-item index="/main/nursingRecords">护理记录管理</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
 
