@@ -54,9 +54,9 @@
                 <span>膳食管理</span>
             </template>
             <el-menu-item-group>
-                <el-menu-item index="/main/mealRecords">膳食记录管理</el-menu-item>
-                <el-menu-item index="/main/mealCanlender">膳食日历展示</el-menu-item>
-                <el-menu-item index="/main/userMealManage">客户膳食分配</el-menu-item>
+                <el-menu-item index="/main/mealRecords">膳食添加</el-menu-item>
+                <el-menu-item index="/main/mealCanlender">膳食展示</el-menu-item>
+                <el-menu-item index="/main/userMealManage">膳食日历</el-menu-item>
             </el-menu-item-group>
         </el-submenu>
 
