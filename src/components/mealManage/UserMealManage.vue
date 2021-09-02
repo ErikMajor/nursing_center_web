@@ -1,8 +1,8 @@
 <template>
     <div>
         <el-card class="box-card">
-        <el-input style="margin-left: 10px;float: left;width: 150px" v-model="foodName" placeholder="请输入客户姓名"></el-input>
-        <el-select v-model="value1" multiple style="margin-left: 20px;" placeholder="客户性别">
+        <el-input style="margin-left: 10px;float: left;width: 150px" v-model="customerName" placeholder="请输入客户姓名"></el-input>
+        <el-select v-model="value1" clearable style="margin-left: 20px;" placeholder="客户性别">
             <el-option
                     v-for="item in options"
                     :key="item.value"
@@ -13,8 +13,7 @@
 
         <el-select
                 v-model="value2"
-                multiple
-                collapse-tags
+                clearable
                 style="margin-left: 20px;"
                 placeholder="健康状况">
             <el-option
@@ -27,8 +26,7 @@
 
         <el-select
                 v-model="value3"
-                multiple
-                collapse-tags
+                clearable
                 style="margin-left: 20px;"
                 placeholder="住宿状态">
             <el-option
@@ -38,10 +36,8 @@
                     :value="item.value">
             </el-option>
         </el-select>
-        <el-button type="primary" style="margin-left: 10px;" @click="search">查询</el-button>
-
-<!--    </div>-->
-<!--    <div>-->
+        <el-button type="primary" style="margin-left: 10px;" @click="queryUser">查询</el-button>
+            <el-button type="primary" style="margin-left: 10px;" @click="getAllCustomer">所有客户</el-button>
 
             <el-table :data="customerList" stripe>
                 <el-table-column label="客户id" prop="id"></el-table-column>
@@ -53,21 +49,16 @@
                 <el-table-column label="住宿状态" prop='accommodationStatus'></el-table-column>
                 <el-table-column label="健康状况" prop='psychosomaticState'></el-table-column>
                 <el-table-column label="房间号" prop='roomId'></el-table-column>
-                <!--        <el-table-column label="职位" prop='opos'></el-table-column>-->
-                <!--        <el-table-column label="电话" prop='otep'></el-table-column>-->
                 <el-table-column label="操作">
 
                     <template slot-scope="scope">
 
-                        <el-button type="success" slot="reference" icon="el-icon-edit" @click = "getMeal(scope.row)">分配膳食日历</el-button>
+                        <el-button round icon="el-icon-edit" type="warning" @click = "getMeal(scope.row)">分配膳食日历</el-button>
 
                     </template>
 
                 </el-table-column>
             </el-table>
-<!--            <el-pagination background layout="prev, pager, next" :total="AllCount"-->
-<!--                           @current-change="handleCurrentChange" :current-page="page">-->
-<!--            </el-pagination>-->
         </el-card>
     </div>
 </template>
@@ -77,34 +68,45 @@
         data() {
             return {
                 options: [{
-                    value: '选项1',
-                    label: '黄金糕'
+                    value: '男',
+                    label: '男'
                 }, {
-                    value: '选项2',
-                    label: '双皮奶'
-                }, {
-                    value: '选项3',
-                    label: '蚵仔煎'
-                }, {
-                    value: '选项4',
-                    label: '龙须面'
-                }, {
-                    value: '选项5',
-                    label: '北京烤鸭'
+                    value: '女',
+                    label: '女'
                 }],
-                options1:[],
-                options2:[],
+                options1:[
+                    {
+                        value: '健康',
+                        label: '健康'
+                    }, {
+                        value: '生病',
+                        label: '生病'
+                    }
+                ],
+                options2:[
+                    {
+                        value: '入住',
+                        label: '入住'
+                    }, {
+                        value: '外出',
+                        label: '外出'
+                    },{
+                        value: '退住',
+                        label: '退住'
+                    }
+                ],
+                array:{
+                    customerName:'',
+                    customerSex:'',
+                    psychosomaticState:'',
+                    accommodationStatus:''
+                },
                 value1: [],
                 value2: [],
                 value3: [],
                 customerList:[],
                 tableData:{},
-                // array:{
-                //     checkDate:''
-                // }
-
-
-
+                customerName:''
             }
         },
         created(){
@@ -112,14 +114,23 @@
         },
         methods:{
             getAllCustomer(){
-                let path = `http://localhost:8082/customerManage/selectAll`
+                let path = `http://localhost:8081/customerManage/selectAll`
                 this.$ajax.post(path,this.form).then(res=>{
                     this.customerList = res.data
                 })
-                // this.array.checkDate = this.customerList.checkinDate.year()+"-"+this.customerList.checkinDate.month()+"-"+this.customerList.checkinDate.date()
             },
             getMeal(val){
                 this.$router.push(`/main/mealList/${val.id}`)
+            },
+            queryUser(){
+                this.array.customerName = this.customerName
+                this.array.customerSex = this.value1
+                this.array.psychosomaticState = this.value2
+                this.array.accommodationStatus = this.value3
+                let path = `http://localhost:8081/customerManage/queryUser`
+                this.$ajax.post(path,this.array).then(res=>{
+                    this.customerList = res.data
+                })
             }
         }
     }

@@ -1,8 +1,8 @@
 <template>
 <div>
     <div>
-    <el-input style="margin-left: 10px;float: left;width: 150px" v-model="foodName" placeholder="请输入膳食名称"></el-input>
-    <el-select v-model="value1" multiple style="margin-left: 20px;" placeholder="食品类别">
+    <el-input style="margin-left: 80px;float: left;width: 150px" v-model="foodName" placeholder="请输入膳食名称"></el-input>
+    <el-select v-model="value" style="margin-left: 15px;width: 150px" clearable placeholder="食品类别">
         <el-option
                 v-for="item in options"
                 :key="item.value"
@@ -12,10 +12,9 @@
     </el-select>
 
     <el-select
-            v-model="value2"
-            multiple
-            collapse-tags
-            style="margin-left: 20px;"
+            v-model="value1"
+            style="margin-left: 15px;width: 150px"
+            clearable
             placeholder="食品标签">
         <el-option
                 v-for="item in options1"
@@ -26,10 +25,9 @@
     </el-select>
 
     <el-select
-            v-model="value3"
-            multiple
-            collapse-tags
-            style="margin-left: 20px;"
+            v-model="value2"
+            style="margin-left: 15px;width: 150px"
+            clearable
             placeholder="供应星期">
         <el-option
                 v-for="item in options2"
@@ -40,10 +38,9 @@
     </el-select>
 
     <el-select
-            v-model="value4"
-            multiple
-            collapse-tags
-            style="margin-left: 20px;"
+            v-model="value3"
+            style="margin-left: 15px;width: 150px"
+            clearable
             placeholder="供应类别">
         <el-option
                 v-for="item in options3"
@@ -52,24 +49,25 @@
                 :value="item.value">
         </el-option>
     </el-select>
-    <el-button type="primary" style="margin-left: 10px;" @click="search">查询膳食</el-button>
-    <el-button type="primary" style="margin-left: 20px;" @click="addFood">添加膳食</el-button>
+    <el-button type="primary" style="margin-left: 5px;" @click="search">查询膳食</el-button>
+        <el-button type="primary" style="margin-left: 5px;" @click="getFoodList">所有膳食</el-button>
+    <el-button type="primary" style="margin-left: 5px;" @click="addFood">添加膳食</el-button>
     </div>
 
 <div class="h1">
-    <el-row class="h2" v-for="(m, index1) in foodRow" :key="index1" style="margin-top: 50px">
-<!--        mealRow表示数据库中膳食每四个一行，一共有多少行数据-->
+    <el-row class="h2" v-for="(m, index1) in foodRow" :key="index1" style="margin-top: 100px;margin-left: 40px">
         <el-col class="h3" :span="4" v-for="(o, index2) in 4" :key="index2" :offset="index2 > 0 ? 2 : 0">
-            <el-card :body-style="{ padding: '10px' }" v-if="number > (index1*4+index2)">
-<!--                number表示一共有多少个膳食-->
+            <el-card :body-style="{ padding: '10px' }" v-if="number > (index1*4+index2)" style="width: 200px;height: 260px">
                 <div v-if="tableData[index1*4+index2].foodPicture">
-                    <img :src="`http://localhost:8082/${tableData[index1*4+index2].foodPicture}`" class="image"/>
+                    <img :src="`http://localhost:8081/${tableData[index1*4+index2].foodPicture}`" class="image"/>
                 </div>
                 <div style="padding: 14px;">
                     <div>名称：{{tableData[index1*4+index2].foodName}}</div>
                     <div>价格：{{tableData[index1*4+index2].foodPrice}}</div>
+                    <div>供应星期：{{tableData[index1*4+index2].supplyDate}}</div>
+                    <div>供应时间段：{{tableData[index1*4+index2].supplyType}}</div>
                     <div class="bottom clearfix">
-                        <el-button type="text" class="button">操作按钮</el-button>
+                        <el-button type="text" class="button" @click="add((tableData[index1*4+index2].id),(tableData[index1*4+index2].supplyDate),(tableData[index1*4+index2].supplyType))">添加</el-button>
                     </div>
                 </div>
             </el-card>
@@ -82,21 +80,49 @@
 <script>
     export default {
         name: "MealCanlender",
-        created(){
-             // this.getFoodList()
-        },
         mounted(){
-            this.getFoodNum()
+            this.getParams()
+            this.getFoodList()
         },
         methods:{
+            getSearchNum(){
+                let path = `http://localhost:8081/mealManage/getSearchNum`
+                this.$ajax.post(path,this.array1).then(res=>{
+                    this.number = res.data
+                    if(this.number < 4)
+                        this.foodRow = 1;
+                    else if(this.number % 4 === 0){
+                        this.foodRow = this.number/4;
+                    }
+                    else{
+                        this.foodRow = parseInt((this.number/4).toString()) + 1;
+                    }
+                })
+            },
+            search(){
+                this.array1.foodName = this.foodName
+                this.array1.foodType = this.value
+                this.array1.foodTag = this.value1
+                this.array1.supplyDate = this.value2
+                this.array1.supplyType = this.value3
+                this.getSearchNum()
+                let path = `http://localhost:8081/mealManage/search`
+                this.$ajax.post(path,this.array1).then(res=>{
+                    this.tableData = res.data
+                })
+            },
+            addFood(){
+                this.$router.push(`/main/mealRecords`)
+            },
             getFoodList(){
-                let path = `http://localhost:8082/mealManage/selectAll`
+                this.getFoodNum()
+                let path = `http://localhost:8081/mealManage/selectAll`
                 this.$ajax.post(path).then(res=>{
                     this.tableData = res.data
                 })
             },
             getFoodNum(){
-                let path = `http://localhost:8082/mealManage/getFoodNum`
+                let path = `http://localhost:8081/mealManage/getFoodNum`
                 this.$ajax.post(path).then(res=>{
                     this.number = res.data
                     if(this.number < 4)
@@ -108,40 +134,148 @@
                         this.foodRow = parseInt((this.number/4).toString()) + 1;
                     }
                 })
-                this.getFoodList()
+            },
+            getParams(){
+                const row = this.$route.query.row
+                const col = this.$route.query.col
+                this.array.foodDate = row
+                this.array.foodWeek = col
+            },
+            add(foodId,supplyDate,supplyType){
+                this.judge = this.$route.query.customerId
+                this.array.customerId = this.$route.query.customerId
+                this.array.foodWeek = this.$route.query.row
+                this.array.foodDate = this.$route.query.col
+                this.array.foodId = foodId
+                if(this.judge !== undefined && this.array.foodWeek !== undefined && this.array.foodDate !== undefined) {
+                    if(this.array.foodWeek === supplyDate && this.array.foodDate === supplyType) {
+                        let path = `http://localhost:8081/mealManage/insertMealSetting`
+                        this.$ajax.post(path, this.array).then(res => {
+                            this.tableData = res.data
+                            if (res.data.state === "success") {
+                                this.$message({
+                                    message: "恭喜你添加成功",
+                                    type: "success",
+
+                                })
+                            }
+                        })
+                    }
+                    else{
+                        this.$message({
+                            message: "要添加的食物周期或者时间段不同，请添加周期和时间段都相同的食物",
+                            type: "failed",
+
+                        })
+                    }
+                }
+                else{
+                    this.$message({
+                        message: "要先指定添加客户",
+                        type: "failed",
+
+                    })
+                }
             }
+
 
         },
         data() {
             return {
                 options: [{
-                    value: '选项1',
-                    label: '黄金糕'
+                    value: '大荤',
+                    label: '大荤'
                 }, {
-                    value: '选项2',
-                    label: '双皮奶'
+                    value: '小荤',
+                    label: '小荤'
                 }, {
-                    value: '选项3',
-                    label: '蚵仔煎'
+                    value: '素菜',
+                    label: '素菜'
                 }, {
-                    value: '选项4',
-                    label: '龙须面'
+                    value: '甜点',
+                    label: '甜点'
                 }, {
-                    value: '选项5',
-                    label: '北京烤鸭'
+                    value: '水果',
+                    label: '水果'
+                },{
+                    value: '套餐',
+                    label: '套餐'
                 }],
-                options1:[],
-                options2:[],
-                options3:[],
+                options1: [{
+                    value: '多糖',
+                    label: '多糖'
+                }, {
+                    value: '少糖',
+                    label: '少糖'
+                }, {
+                    value: '多脂肪',
+                    label: '多脂肪'
+                }, {
+                    value: '少脂肪',
+                    label: '少脂肪'
+                }, {
+                    value: '多盐',
+                    label: '多盐'
+                },{
+                    value: '少盐',
+                    label: '少盐'
+                }],
+                options2: [{
+                    value: '周一',
+                    label: '周一'
+                }, {
+                    value: '周二',
+                    label: '周二'
+                }, {
+                    value: '周三',
+                    label: '周三'
+                }, {
+                    value: '周四',
+                    label: '周四'
+                }, {
+                    value: '周五',
+                    label: '周五'
+                }, {
+                    value: '周六',
+                    label: '周六'
+                },{
+                    value: '周日',
+                    label: '周日'
+                }],
+                options3: [{
+                    value: '早餐',
+                    label: '早餐'
+                }, {
+                    value: '午餐',
+                    label: '午餐'
+                }, {
+                    value: '晚餐',
+                    label: '晚餐'
+                }],
+                judge:0,
+                array1:{
+                    foodName:'',
+                    foodType: '',
+                    foodTag: '',
+                    supplyDate: '',
+                    supplyType: '',
+                },
+                array:{
+                    customerId:'',
+                    foodId:'',
+                    foodDate:'',
+                    foodWeek:''
+                },
+                value: [],
                 value1: [],
                 value2: [],
                 value3: [],
-                value4: [],
-                foodName: [],
+                foodName: '',
                 tableData:{},
                 number:0,
-                foodRow:0
-
+                foodRow:0,
+                row:'',
+                col:'',
             }
         }
     }
@@ -161,7 +295,7 @@
     }
     .image {
         width: 100%;
-        height: 100%;
+        height: 100% ;
         display: block;
     }
 </style>
