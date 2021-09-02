@@ -114,7 +114,7 @@
         },
         methods:{
             getAllCustomer(){
-                let path = `http://localhost:8081/customerManage/selectAll`
+                let path = `http://localhost:8081/customerManage/selectAllCustomer`
                 this.$ajax.post(path,this.form).then(res=>{
                     this.customerList = res.data
                 })
