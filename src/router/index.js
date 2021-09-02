@@ -4,13 +4,8 @@ import Router from 'vue-router'
 import Login from '../components/login/Login'
 import Register from '../components/login/Register'
 import Main from '../components/main/Main'
-import RoomManage from '../components/bedManage/RoomManage'
-import BedManage from '../components/bedManage/BedManage'
-import MealCanlender from '../components/mealManage/MealCanlender'
-import MealRecords from '../components/mealManage/MealRecords'
-import UserMealManage from '../components/mealManage/UserMealManage'
-import MealList from '../components/mealManage/MealList'
 import User from "../components/user_manage/User";
+// import UserImport from "../components/user_manage/UserImport";
 import NursingContent from "../components/nursing_manage/NursingContent";
 import NursingContentAdd from "../components/nursing_manage/NursingContentAdd";
 import NursingLevel from "../components/nursing_manage/NursingLevel";
@@ -46,32 +41,44 @@ const router = new Router({
                 },
                 {
                     path: 'roomManage',
-                    component: RoomManage
+                    component: () => import('@/components/bedManage/RoomManage')
                 },
                 {
                     path: 'bedManage/:id',
-                    component: BedManage
+                    component: () => import('@/components/bedManage/BedManage')
                 },
                 {
                     path: 'mealCanlender',
-                    component: MealCanlender
+                    component: () => import('@/components/mealManage/MealCanlender')
                 },
                 {
                     path: 'mealRecords',
-                    component: MealRecords
+                    component: () => import('@/components/mealManage/MealRecords')
                 },
                 {
                     path: 'userMealManage',
-                    component: UserMealManage
+                    component: () => import('@/components/mealManage/UserMealManage')
                 },
                 {
                     path: 'mealList/:id',
                     props: true,
-                    component: MealList
+                    component: () => import('@/components/mealManage/MealList')
                 },
                 {
                     path: 'user',
                     component: User
+                },
+                // {
+                //     path: 'userImport',
+                //     component: UserImport
+                // },
+                {
+                    path: 'customerConcern',
+                    component: () => import('@/components/customerConcern/CustomerConcern')
+                },
+                {
+                    path: 'serviceConcern/:id',
+                    component: () => import('@/components/customerConcern/ServiceConcern')
                 },
                 {
                     path: 'nursingContent',

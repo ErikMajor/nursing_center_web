@@ -26,15 +26,15 @@
         </el-menu-item-group>
       </el-submenu>
 
-      <el-submenu index="3">
-        <template slot="title">
-          <i class="el-icon-setting"></i>
-          <span>床位管理</span>
-        </template>
-        <el-menu-item-group>
-          <el-menu-item index="3-1">床位管理</el-menu-item>
-        </el-menu-item-group>
-      </el-submenu>
+        <el-submenu index="3">
+            <template slot="title">
+                <i class="el-icon-setting"></i>
+                <span>床位管理</span>
+            </template>
+            <el-menu-item-group>
+                <el-menu-item index="/main/roomManage">床位管理</el-menu-item>
+            </el-menu-item-group>
+        </el-submenu>
 
       <el-submenu index="4">
         <template slot="title">
@@ -48,17 +48,17 @@
         </el-menu-item-group>
       </el-submenu>
 
-      <el-submenu index="5">
-        <template slot="title">
-          <i class="el-icon-notebook-2"></i>
-          <span>膳食管理</span>
-        </template>
-        <el-menu-item-group>
-          <el-menu-item index="5-1">膳食记录管理</el-menu-item>
-          <el-menu-item index="5-2">膳食日历展示</el-menu-item>
-          <el-menu-item index="5-3">客户膳食分配</el-menu-item>
-        </el-menu-item-group>
-      </el-submenu>
+        <el-submenu index="5">
+            <template slot="title">
+                <i class="el-icon-notebook-2"></i>
+                <span>膳食管理</span>
+            </template>
+            <el-menu-item-group>
+                <el-menu-item index="/main/mealRecords">膳食记录管理</el-menu-item>
+                <el-menu-item index="/main/mealCanlender">膳食日历展示</el-menu-item>
+                <el-menu-item index="/main/userMealManage">客户膳食分配</el-menu-item>
+            </el-menu-item-group>
+        </el-submenu>
 
 
       <el-submenu index="6">
@@ -67,8 +67,7 @@
           <span>服务对象管理</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="1-1">设置服务对象</el-menu-item>
-          <el-menu-item index="1-1">服务关注</el-menu-item>
+          <el-menu-item index="/main/customerConcern">设置服务对象</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
 
