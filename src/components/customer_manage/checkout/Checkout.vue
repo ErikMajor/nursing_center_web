@@ -5,6 +5,7 @@
         <el-autocomplete
             v-model="name"
             :fetch-suggestions="querySearchAsync"
+            style="width: 40%;margin: 1%;padding-left: 50%"
             clearable
             placeholder="请输入内容"
             @select="handleSelect"
@@ -37,6 +38,10 @@ export default {
     }
   },
   methods: {
+    handleCurrentChange(val) {
+      this.currentPage = val
+      this.changeCard(name)
+    },
     changeCard(queryString) {
       var list = [{}]
       let url = 'http://localhost:8081/checkin/queryListByName?name=' + queryString
@@ -62,7 +67,7 @@ export default {
   },
 
   mounted() {
-
+    this.changeCard("")
   }
 }
 </script>

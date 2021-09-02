@@ -4,7 +4,7 @@
       shadow="always"
       style="width: 100%"
   >
-    <el-row :justify="justify" :align="align" :gutter="20">
+    <el-row :align="align" :gutter="20" :justify="justify">
       <el-col :span="4">
         头像还没写
       </el-col>
@@ -68,17 +68,38 @@
       </el-col>
     </el-row>
     <el-row>
-      <el-button type="danger" plain>退住</el-button>
+      <el-button :disabled="checkout" plain type="danger" @click="dialogFormVisible = true">{{ info }}</el-button>
+      <div v-if="checkout">
+        <el-button plain type="primary" @click="dialogVisible = true">查看退住信息</el-button>
+      </div>
+      <el-dialog :visible.sync="dialogFormVisible" title="填写客户退住信息">
+        <Dialog :data="this.customer.id"/>
+      </el-dialog>
+      <el-dialog :visible.sync="dialogVisible" title="修改退住信息">
+        <Info :data="this.record"/>
+      </el-dialog>
     </el-row>
   </el-card>
 </template>
 
 <script>
+import CheckoutDialog from "@/components/customer_manage/checkout/CheckoutDialog";
+import CheckoutInfo from "@/components/customer_manage/checkout/CheckoutInfo";
+
 export default {
   props: ['data'],
+  components: {
+    Dialog: CheckoutDialog,
+    Info: CheckoutInfo
+  },
   data() {
     return {
       align: "middle",
+      checkout: false,
+      record: [{}],
+      info: '退住',
+      dialogFormVisible: false,
+      dialogVisible: false,
       justify: "center",
       customer: this.data,
       id: "",
@@ -144,6 +165,18 @@ export default {
     this.bloodType = this.customer.bloodType
     this.filePath = this.customer.filePath
     this.remarks = this.customer.remarks
+    this.$ajax.get('http://localhost:8081/checkout/record', {
+      params: {
+        id: this.id
+      }
+    }).then(res => {
+      if (res.data.record === null) {
+        this.checkout = false
+      } else {
+        this.checkout = true
+        this.record = res.data.record
+      }
+    })
   }
 }
 </script>
