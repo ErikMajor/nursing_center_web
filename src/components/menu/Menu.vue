@@ -20,9 +20,9 @@
           <span>客户管理</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="/main/checkin">入住管理</el-menu-item>
-          <el-menu-item index="2-2">退住管理</el-menu-item>
-          <el-menu-item index="2-3">外出管理</el-menu-item>
+          <el-menu-item index="/main/manage">在院客户</el-menu-item>
+          <el-menu-item index="/main/checkin">入住</el-menu-item>
+          <el-menu-item index="/main/checkout">退住</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
 
@@ -32,7 +32,7 @@
           <span>床位管理</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="/main/roomManage">床位管理</el-menu-item>
+          <el-menu-item index="3-1">床位管理</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
 
@@ -54,9 +54,9 @@
           <span>膳食管理</span>
         </template>
         <el-menu-item-group>
-          <el-menu-item index="/main/mealRecords">膳食记录管理</el-menu-item>
-          <el-menu-item index="/main/mealCanlender">膳食日历展示</el-menu-item>
-          <el-menu-item index="/main/userMealManage">客户膳食分配</el-menu-item>
+          <el-menu-item index="5-1">膳食记录管理</el-menu-item>
+          <el-menu-item index="5-2">膳食日历展示</el-menu-item>
+          <el-menu-item index="5-3">客户膳食分配</el-menu-item>
         </el-menu-item-group>
       </el-submenu>
 
@@ -92,3 +92,35 @@
     </el-menu>
   </div>
 </template>
+
+<script>
+export default {
+  methods: {
+    handleSelect(key) {
+      console.log(key)
+      switch (key) {
+        case '3-1':
+          this.$router.push('/main/bedManage');
+          break;
+        case '5-1':
+          this.$router.push('/main/mealRecords');
+          break;
+        case '5-2':
+          this.$router.push('/main/mealCalender');
+          break;
+        case '5-3':
+          this.$router.push('/main/userMealManage');
+          break;
+
+      }
+    }
+
+  }
+}
+</script>
+
+<style scoped>
+.el-menu-vertical {
+  min-height: 600px;
+}
+</style>

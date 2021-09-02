@@ -1,13 +1,8 @@
 <template>
     <div  class="post-add">
-        <el-breadcrumb separator-class="el-icon-arrow-right" class="header">
-            <el-breadcrumb-item >首页</el-breadcrumb-item>
-            <el-breadcrumb-item :to="{ path: '/main/company' }">职位管理</el-breadcrumb-item>
-            <el-breadcrumb-item>新增</el-breadcrumb-item>
-        </el-breadcrumb>
         <el-card class="box-card">
             <div slot="header" class="clearfix">
-                <span>新增用户信息</span>
+                <span>修改用户信息</span>
             </div>
             <div>
                 <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
@@ -33,33 +28,25 @@
                         <el-input v-model="ruleForm.salary"></el-input>
                     </el-form-item>
                     <el-form-item label="员工类别" prop="type">
+                        <el-select v-model="ruleForm.sex" placeholder="请选择性别">
+                            <el-option label="男" value="0"></el-option>
+                            <el-option label="女" value="1"></el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="职务" prop="duty">
                         <el-input v-model="ruleForm.type"></el-input>
                     </el-form-item>
-                    <el-form-item label="招聘人数" prop="name">
-                        <el-input v-model="ruleForm.number"></el-input>
+                    <el-form-item label="职称" prop="title">
+                        <el-input v-model="ruleForm.type"></el-input>
                     </el-form-item>
-                    <el-form-item label="照片" prop="description">
-                        <el-upload
-                                list-type="picture-card"
-                                class="avatar-uploader"
-                                action="http://localhost:8081/common/upload"
-                                :show-file-list="false"
-                                :on-success="handleAvatarSuccess"
-                                :before-upload="beforeAvatarUpload">
-                            <img v-if="ruleForm.photo" :src="`http://localhost:8081/${ruleForm.photo}`" class="avatar">
-                            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                        </el-upload>
+                    <el-form-item label="员工类别" prop="type">
+                        <el-input v-model="ruleForm.type"></el-input>
                     </el-form-item>
-
-                    <el-form-item label="简介" prop="description">
-                        <el-input type="textarea" rows="5" v-model="ruleForm.description"></el-input>
-                    </el-form-item>
-                    <el-form-item label="备注" prop="description">
+                    <el-form-item label="简介" prop=" brief">
                         <el-input type="textarea" rows="5" v-model="ruleForm.description"></el-input>
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="primary" @click="submitForm()">立即创建</el-button>
-                        <el-button @click="resetForm('ruleForm')">重置</el-button>
+                        <el-button type="primary" @click="submitForm()">立即修改</el-button>
                     </el-form-item>
                 </el-form>
             </div>

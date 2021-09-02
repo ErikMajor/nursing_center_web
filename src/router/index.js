@@ -11,7 +11,6 @@ import MealRecords from '../components/mealManage/MealRecords'
 import UserMealManage from '../components/mealManage/UserMealManage'
 import MealList from '../components/mealManage/MealList'
 import User from "../components/user_manage/User";
-import UserImport from "../components/user_manage/UserImport";
 import NursingContent from "../components/nursing_manage/NursingContent";
 import NursingContentAdd from "../components/nursing_manage/NursingContentAdd";
 import NursingLevel from "../components/nursing_manage/NursingLevel";
@@ -73,10 +72,6 @@ const router = new Router({
                 {
                     path: 'user',
                     component: User
-                },
-                {
-                    path: 'userImport',
-                    component: UserImport
                 },
                 {
                     path: 'nursingContent',
