@@ -117,6 +117,11 @@
                 let path = `http://localhost:8081/customerManage/selectAllCustomer`
                 this.$ajax.post(path,this.form).then(res=>{
                     this.customerList = res.data
+                    this.customerList.forEach((item,index) =>{
+                        if(this.customerList[index].roomId === null){
+                            this.customerList[index].roomId = '暂无分配'
+                        }
+                    })
                 })
             },
             getMeal(val){
@@ -131,6 +136,11 @@
                 let path = `http://localhost:8081/customerManage/queryUser`
                 this.$ajax.post(path,this.array).then(res=>{
                     this.customerList = res.data
+                    this.customerList.forEach((item,index) =>{
+                        if(this.customerList[index].roomId === null){
+                            this.customerList[index].roomId = '暂无分配'
+                        }
+                    })
                 })
             }
         }

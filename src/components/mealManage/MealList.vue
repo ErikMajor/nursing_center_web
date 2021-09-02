@@ -32,7 +32,7 @@
                         <td>
                             <p>{{weekNum}}</p>
                         </td>
-                        <td class="courses" v-for="(lesson, lessonIndex) in classTableData.lessons" :key="lessonIndex" @click="detail(weekNum,lesson)">
+                        <td class="courses" v-for="(lesson, lessonIndex) in classTableData.lessons" :key="lessonIndex" @click="gain(weekNum,lesson)">
 
                             <div v-if="weekNum===row&&lesson===col">
                                 <el-row class="h2" v-for="(m, index1) in foodRow" :key="index1" style="margin-top: 8px">
@@ -142,13 +142,23 @@
                     console.log(this.array)
                     this.$ajax.post(path, this.array).then(res => {
                         this.number = res.data
-                        if (this.number < 2)
-                            this.foodRow = 1;
-                        else if (this.number % 2 === 0) {
-                            this.foodRow = this.number / 2;
-                        } else {
-                            this.foodRow = parseInt((this.number / 2).toString()) + 1;
+                        if(this.number === 0){
+                            this.$message({
+                                message: r+","+c+"还未添加膳食",
+                                type: "fail",
+
+                            })
+                        }else{
+                            if (this.number < 2)
+                                this.foodRow = 1;
+                            else if (this.number % 2 === 0) {
+                                this.foodRow = this.number / 2;
+                            } else {
+                                this.foodRow = parseInt((this.number / 2).toString()) + 1;
+                            }
                         }
+
+
 
                     })
 

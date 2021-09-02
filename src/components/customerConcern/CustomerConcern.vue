@@ -3,6 +3,14 @@
         <el-card class="box-card">
             <el-input style="margin-left: 10px;float: left;width: 150px" v-model="customerName" placeholder="请输入客户姓名"></el-input>
 
+            <el-select v-model="value1" clearable style="margin-left: 20px;" placeholder="客户性别">
+                <el-option
+                        v-for="item in options"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                </el-option>
+            </el-select>
             <el-button type="primary" style="margin-left: 10px;" @click="queryUser">查询</el-button>
             <el-button type="primary" style="margin-left: 10px;" @click="getAllCustomer">所有客户</el-button>
 
@@ -69,7 +77,7 @@
                 value1: [],
                 value2: [],
                 value3: [],
-                customerList:[],
+                customerList:{},
                 tableData:{},
                 customerName:''
             }
@@ -82,16 +90,27 @@
                 let path = `http://localhost:8081/customerManage/selectAllCustomer`
                 this.$ajax.post(path,this.form).then(res=>{
                     this.customerList = res.data
+                    this.customerList.forEach((item,index) =>{
+                        if(this.customerList[index].roomId === null){
+                            this.customerList[index].roomId = '暂无分配'
+                        }
+                    })
                 })
             },
             searchBuyService(val){
                 this.$router.push(`/main/serviceConcern/${val.id}`)
             },
             queryUser(){
+                this.array.customerSex = this.value1
                 this.array.customerName = this.customerName
                 let path = `http://localhost:8081/customerManage/queryUser`
                 this.$ajax.post(path,this.array).then(res=>{
                     this.customerList = res.data
+                    this.customerList.forEach((item,index) =>{
+                        if(this.customerList[index].roomId === null){
+                            this.customerList[index].roomId = '暂无分配'
+                        }
+                    })
                 })
             }
         }
