@@ -34,6 +34,14 @@ const router = new Router({
                     component: () => import('@/components/customer_manage/checkin/Checkin')
                 },
                 {
+                    path: 'checkout',
+                    component: () => import('@/components/customer_manage/checkout/Checkout')
+                },
+                {
+                    path: 'manage',
+                    component: () => import('@/components/customer_manage/manage/Manage')
+                },
+                {
                     path: 'roomManage',
                     component: RoomManage
                 },
@@ -55,16 +63,16 @@ const router = new Router({
                 },
                 {
                     path: 'mealList/:id',
-                    props:true,
+                    props: true,
                     component: MealList
                 },
                 {
                     path: 'user',
-                        component: User
+                    component: User
                 },
                 {
                     path: 'userImport',
-                        component: UserImport
+                    component: UserImport
                 }
             ]
         },
