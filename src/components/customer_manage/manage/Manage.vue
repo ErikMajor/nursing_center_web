@@ -49,7 +49,7 @@ export default {
     async search() {
       let data = []
       let total = 0
-      await axios.get('http://localhost:8081/checkin/queryByName/1', {
+      await axios.get('http://localhost:8081/checkin/queryByNameWithPage/1', {
         params: {
           name: this.name.toString()
         }
