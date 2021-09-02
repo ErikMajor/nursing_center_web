@@ -18,9 +18,11 @@
         </ul>
       </el-main>
       <el-footer>
-        <div class="block">
+        <div class="pagination" v-if="pageshow">
           <el-pagination
               :total="pages"
+              @current-change="handleCurrentChange"
+              :current-change.sync="currentPage"
               layout="prev, pager, next">
           </el-pagination>
         </div>
@@ -43,24 +45,28 @@ export default {
       name: '',
       timeout: null,
       pages: 0,
+      currentPage: 0,
+      pageshow: true
     }
   },
   methods: {
+    handleCurrentChange(val) {
+      this.currentPage = val
+      this.search()
+    },
     async search() {
       let data = []
       let total = 0
-      await axios.get('http://localhost:8081/checkin/queryByNameWithPage/1', {
+      await axios.get('http://localhost:8081/checkin/queryByNameWithPage/'+this.currentPage, {
         params: {
           name: this.name.toString()
         }
+      }).then(function (response) {
+        data = response.data.customers
+        total = response.data.pages
       })
-          .then(function (response) {
-            data = response.data.customers
-            total = response.data.pages
-          })
       this.rows = data
       this.pages = total * 10
-      console.log(this.rows)
     }
   },
   mounted() {

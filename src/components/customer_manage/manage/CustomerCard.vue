@@ -4,9 +4,9 @@
       shadow="always"
       style="width: 100%"
   >
-    <el-row :justify="justify" :align="align" :gutter="20">
+    <el-row :align="align" :gutter="20" :justify="justify">
       <el-col :span="4">
-        头像还没写
+
       </el-col>
       <el-col :span="10">
         <el-row justify="center">
@@ -67,16 +67,52 @@
         </el-row>
       </el-col>
     </el-row>
+    <el-row>
+      <el-col :span="8">
+        <el-button :disabled="goOut" @click="outVisible = true" plain type="info">外出</el-button>
+        <el-dialog :visible.sync="outVisible" title="外出登记">
+          <out_dialog :data="this.id"/>
+        </el-dialog>
+      </el-col>
+      <el-col :span="8">
+        <el-button :disabled="back" @click="backVisible = true" plain type="info">登记回院</el-button>
+        <el-dialog :visible.sync="backVisible" title="登记回院">
+          <back_dialog :data="this.id"/>
+        </el-dialog>
+      </el-col>
+      <el-col :span="8">
+        <el-button plain type="info" @click="dialogFormVisible = true">编辑信息</el-button>
+
+        <el-dialog :visible.sync="dialogFormVisible" title="编辑客户信息">
+          <modify :data="this.customer"/>
+        </el-dialog>
+      </el-col>
+    </el-row>
   </el-card>
 </template>
 
 <script>
+import ModifyCustomer from "@/components/customer_manage/manage/ModifyCustomer";
+import OutDialog from "@/components/customer_manage/manage/OutDialog";
+import BackDialog from "@/components/customer_manage/manage/BackDialog";
+
 export default {
   props: ['data'],
+  components: {
+    modify: ModifyCustomer,
+    out_dialog: OutDialog,
+    back_dialog: BackDialog
+  },
   data() {
     return {
+      outVisible: false,
+      backVisible: false,
+      goOut: false,
+      back: true,
+      dialogFormVisible: false,
       align: "middle",
       justify: "center",
+      registration: null,
       customer: this.data,
       id: "",
       name: "",
@@ -101,12 +137,14 @@ export default {
 
   },
   watch: {
+
     data(newVal) {
       this.customer = newVal
       this.id = newVal.id
       this.name = newVal.customerName
       this.age = newVal.customerAge
       this.sex = newVal.customerSex
+      this.idCard = newVal.idCard
       this.buildingId = newVal.buildingId
       this.recordId = newVal.recordId
       this.elderType = newVal.elderType
@@ -122,12 +160,15 @@ export default {
       this.remarks = newVal.remarks
     }
   },
-  methods: {},
+  methods: {
+
+  },
   mounted() {
     this.id = this.customer.id
     this.name = this.customer.customerName
     this.age = this.customer.customerAge
     this.sex = this.customer.customerSex
+    this.idCard = this.customer.idCard
     this.buildingId = this.customer.buildingId
     this.recordId = this.customer.recordId
     this.elderType = this.customer.elderType
@@ -141,6 +182,20 @@ export default {
     this.bloodType = this.customer.bloodType
     this.filePath = this.customer.filePath
     this.remarks = this.customer.remarks
+
+    this.$ajax.get('http://localhost:8081/registration/selById', {
+      params: {
+        id: this.id
+      }
+    }).then(res => {
+      if (res.data.registration === null) {
+        this.goOut = false
+        this.back = true
+      } else {
+        this.goOut = true
+        this.back = false
+      }
+    })
   }
 }
 </script>
