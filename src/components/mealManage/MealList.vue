@@ -32,17 +32,17 @@
                         <td>
                             <p>{{weekNum}}</p>
                         </td>
-                        <td class="courses" v-for="(lesson, lessonIndex) in classTableData.lessons" :key="lessonIndex">
+                        <td class="courses" v-for="(lesson, lessonIndex) in classTableData.lessons" :key="lessonIndex" @click="detail(weekNum,lesson)">
 
                             <div v-if="weekNum===row&&lesson===col">
-                                <el-row class="h2" v-for="(m, index1) in foodRow" :key="index1" style="margin-top: 50px">
+                                <el-row class="h2" v-for="(m, index1) in foodRow" :key="index1" style="margin-top: 8px">
                                     <el-col class="h3" :span="8" v-for="(o, index2) in 2" :key="index2" :offset="index2 > 0 ? 2 : 0">
-                                        <el-card :body-style="{padding: '0px'}"  v-if="number > (index1*4+index2)">
-                                            <div v-if="tableData[index1*4+index2].foodPicture">
-                                                <img :src="`http://localhost:8081/${tableData[index1*4+index2].foodPicture}`" class="image"/>
+                                        <el-card :body-style="{padding: '0px'}"  v-if="number > (index1*2+index2)">
+                                            <div v-if="tableData[index1*2+index2].foodPicture">
+                                                <img :src="`http://localhost:8081/${tableData[index1*2+index2].foodPicture}`" class="image"/>
                                             </div>
-                                            <div>名称：{{tableData[index1*4+index2].foodName}}</div>
-                                            <div>价格：{{tableData[index1*4+index2].foodPrice}}</div>
+                                            <div>名称：{{tableData[index1*2+index2].foodName}}</div>
+                                            <div>价格：{{tableData[index1*2+index2].foodPrice}}</div>
                                         </el-card>
                                     </el-col>
                                 </el-row>
@@ -128,7 +128,7 @@
             };
         },
             mounted(){
-                this.customerId = this.$route.params.id
+                this.customerId = this.$route.params.customerId
             },
             methods: {
                 gain(r, c) {
@@ -137,19 +137,18 @@
                     this.col = c
                     this.array.foodWeek = r
                     this.array.foodDate = c
-                    this.array.customerId = this.$route.params.id
+                    this.array.customerId = this.$route.params.customerId
                     this.getPicture()
                     console.log(this.array)
                     this.$ajax.post(path, this.array).then(res => {
                         this.number = res.data
-                        if (this.number < 4)
+                        if (this.number < 2)
                             this.foodRow = 1;
-                        else if (this.number % 4 === 0) {
-                            this.foodRow = this.number / 4;
+                        else if (this.number % 2 === 0) {
+                            this.foodRow = this.number / 2;
                         } else {
-                            this.foodRow = parseInt((this.number / 4).toString()) + 1;
+                            this.foodRow = parseInt((this.number / 2).toString()) + 1;
                         }
-
 
                     })
 
@@ -233,8 +232,12 @@
     .bgColor{
         background-color: #89B2E5;
     }
+    .h3{
+        margin-left: 50px;
+    }
     .image{
+
         width: 100%;
-        height: 100%;
+        height: 100px;
     }
 </style>

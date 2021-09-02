@@ -1,8 +1,8 @@
 <template>
 <div>
     <div>
-    <el-input style="margin-left: 80px;float: left;width: 150px" v-model="foodName" placeholder="请输入膳食名称"></el-input>
-    <el-select v-model="value" style="margin-left: 15px;width: 150px" clearable placeholder="食品类别">
+    <el-input style="margin-left: 40px;float: left;width: 150px" v-model="foodName" placeholder="请输入膳食名称"></el-input>
+    <el-select v-model="value" style="margin-left: 10px;width: 150px" clearable placeholder="食品类别">
         <el-option
                 v-for="item in options"
                 :key="item.value"
@@ -13,7 +13,7 @@
 
     <el-select
             v-model="value1"
-            style="margin-left: 15px;width: 150px"
+            style="margin-left: 10px;width: 150px"
             clearable
             placeholder="食品标签">
         <el-option
@@ -26,7 +26,7 @@
 
     <el-select
             v-model="value2"
-            style="margin-left: 15px;width: 150px"
+            style="margin-left: 10px;width: 150px"
             clearable
             placeholder="供应星期">
         <el-option
@@ -39,7 +39,7 @@
 
     <el-select
             v-model="value3"
-            style="margin-left: 15px;width: 150px"
+            style="margin-left: 10px;width: 150px"
             clearable
             placeholder="供应类别">
         <el-option
@@ -49,9 +49,10 @@
                 :value="item.value">
         </el-option>
     </el-select>
-    <el-button type="primary" style="margin-left: 5px;" @click="search">查询膳食</el-button>
-        <el-button type="primary" style="margin-left: 5px;" @click="getFoodList">所有膳食</el-button>
-    <el-button type="primary" style="margin-left: 5px;" @click="addFood">添加膳食</el-button>
+    <el-button type="primary" style="margin-left: 10px;" @click="search">查询膳食</el-button>
+        <el-button type="primary" style="margin-left: 10px;" @click="getFoodList">所有膳食</el-button>
+    <el-button type="primary" style="margin-left: 10px;" @click="addFood">添加膳食</el-button>
+        <el-button type="primary" style="margin-left: 10px;" @click="returnBack">返回日历</el-button>
     </div>
 
 <div class="h1">
@@ -134,6 +135,13 @@
                         this.foodRow = parseInt((this.number/4).toString()) + 1;
                     }
                 })
+            },
+            returnBack(){
+                const customerId = this.$route.query.customerId
+                this.$router.push(`/main/MealList/${customerId}`)
+                    // query:{
+                    //     customerId: this.$route.query.customerId
+                    // }
             },
             getParams(){
                 const row = this.$route.query.row
@@ -292,10 +300,11 @@
     .h3{
         width:200px;
         height: 200px;
+
     }
     .image {
-        width: 100%;
-        height: 100% ;
+        width: 180px;
+        height: 100px ;
         display: block;
     }
 </style>

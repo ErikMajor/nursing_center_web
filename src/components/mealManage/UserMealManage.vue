@@ -120,7 +120,8 @@
                 })
             },
             getMeal(val){
-                this.$router.push(`/main/mealList/${val.id}`)
+                const customerId = val.id
+                this.$router.push(`/main/mealList/${customerId}`)
             },
             queryUser(){
                 this.array.customerName = this.customerName

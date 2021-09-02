@@ -60,7 +60,7 @@ const router = new Router({
                     component: () => import('@/components/mealManage/UserMealManage')
                 },
                 {
-                    path: 'mealList/:id',
+                    path: 'mealList/:customerId',
                     props: true,
                     component: () => import('@/components/mealManage/MealList')
                 },
