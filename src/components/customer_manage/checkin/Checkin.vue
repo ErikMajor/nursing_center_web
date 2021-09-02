@@ -118,8 +118,8 @@ export default {
   },
   methods: {
     submit() {
-      axios.post('http://localhost:8081/checkin/insert')
-      this.$router.push('/main/manage')
+      axios.post('http://localhost:8081/checkin/addCustomer', this.form)
+      // this.$router.push('/main/manage')
     }
   }
 }

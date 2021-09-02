@@ -69,10 +69,16 @@
     </el-row>
     <el-row>
       <el-col :span="8">
-        <el-button :disabled="goOut" plain type="info">外出</el-button>
+        <el-button :disabled="goOut" @click="outVisible = true" plain type="info">外出</el-button>
+        <el-dialog :visible.sync="outVisible" title="外出登记">
+          <out_dialog v-on:outId="getOutId" :data="this.id"/>
+        </el-dialog>
       </el-col>
       <el-col :span="8">
-        <el-button :disabled="back" plain type="info">登记回院</el-button>
+        <el-button :disabled="back" @click="backVisible = true" plain type="info">登记回院</el-button>
+        <el-dialog :visible.sync="backVisible" title="登记回院">
+          <back_dialog :data="this.out_id"/>
+        </el-dialog>
       </el-col>
       <el-col :span="8">
         <el-button plain type="info" @click="dialogFormVisible = true">编辑信息</el-button>
@@ -87,14 +93,21 @@
 
 <script>
 import ModifyCustomer from "@/components/customer_manage/manage/ModifyCustomer";
+import OutDialog from "@/components/customer_manage/manage/OutDialog";
+import BackDialog from "@/components/customer_manage/manage/BackDialog";
 
 export default {
   props: ['data'],
   components: {
-    modify: ModifyCustomer
+    modify: ModifyCustomer,
+    out_dialog: OutDialog,
+    back_dialog: BackDialog
   },
   data() {
     return {
+      outVisible: false,
+      out_id: '',
+      backVisible: false,
       goOut: false,
       back: true,
       dialogFormVisible: false,
@@ -147,7 +160,11 @@ export default {
       this.remarks = newVal.remarks
     }
   },
-  methods: {},
+  methods: {
+    getOutId(id) {
+      this.out_id = id
+    }
+  },
   mounted() {
     this.id = this.customer.id
     this.name = this.customer.customerName
