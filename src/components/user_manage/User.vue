@@ -2,7 +2,6 @@
     <div>
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
             <el-form-item label="用户信息">
-                <el-input v-model="formInline.staffName" placeholder="用户信息"></el-input>
             </el-form-item>
         </el-form>
 
@@ -18,18 +17,6 @@
                     label="姓名"
                     width="100px"
                     prop="staffName">
-            </el-table-column>
-            <el-table-column label="是否启用">
-                <template slot-scope="scope">
-                    <el-switch
-                            v-model="scope.row.levelStatus"
-                            active-color="#13ce66"
-                            inactive-color="#ff4949"
-                            active-value="1"
-                            inactive-value="2"
-                            @change="handleChange(scope.row)">
-                    </el-switch>
-                </template>
             </el-table-column>
             <el-table-column
                     label="创建者"
@@ -97,17 +84,8 @@
                 width="30%"
                 :before-close="addHandleClose">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm" v-if="dialogVisible">
-                <el-form-item label="护理级别" prop="levelName">
+                <el-form-item label="用户姓名" prop="staffName">
                     <el-input v-model="ruleForm.levelName"></el-input>
-                </el-form-item>
-                <el-form-item label="是否启用" prop="levelStatus">
-                    <el-switch
-                            v-model="ruleForm.levelStatus"
-                            active-color="#13ce66"
-                            inactive-color="#ff4949"
-                            active-value="1"
-                            inactive-value="0">
-                    </el-switch>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
@@ -143,12 +121,6 @@
                     staffAge:'',
                     levelStatus:false
                 },
-                rules: {
-                    staffName: [
-                        { required: true, message: '请输入护理级别名称', trigger: 'blur' },
-                        { min: 1, max: 10, message: '长度在 1 到 10 个字符', trigger: 'blur' }
-                    ],
-                }
             }
         },
         created() {
@@ -157,7 +129,7 @@
         methods: {
             getData(){
                 this.loading = true
-                let path = `http://localhost:8081/userManage/selAll/${this.currPage}`
+                let path = `http://localhost:8081/userManage/queryAll/${this.currPage}`
                 this.$ajax.post(path,this.formInline).then(res=>{
                     this.pageInfo = res.data
                     this.loading = false
