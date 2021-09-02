@@ -8,6 +8,8 @@ import MealCalender from '../components/mealManage/MealCanlender'
 import MealRecords from '../components/mealManage/MealRecords'
 import UserMealManage from '../components/mealManage/UserMealManage'
 import MealList from '../components/mealManage/MealList'
+import User from "../components/user_manage/User";
+import UserImport from "../components/user_manage/UserImport";
 
 
 Vue.use(Router)
@@ -44,6 +46,14 @@ const router = new Router({
                 {
                     path: 'mealList/:id',
                     component: MealList
+                },
+                {
+                    path: 'user',
+                        component: User
+                },
+                {
+                    path: 'userImport',
+                        component: UserImport
                 }
             ]
         },
