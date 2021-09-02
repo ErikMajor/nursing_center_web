@@ -75,17 +75,20 @@ export default {
       this.$ajax.post(url, this.form).then(res => {
         if (res.data.state === "true") {
           this.out_id = res.data.id
-          console.log(this.out_id)
+          if (localStorage.getItem(this.id) !== '') {
+            localStorage.removeItem(this.id)
+          }
+          localStorage.setItem(this.id, this.out_id)
+          console.log(localStorage.getItem(this.id))
           this.$message({
             message: '添加成功',
             type: 'success'
           });
-          this.$emit('outId', this.out_id)
+          location.reload()
         } else {
           this.$message.error('提交失败');
         }
       })
-      location.reload()
     },
   },
   mounted() {

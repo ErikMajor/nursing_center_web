@@ -71,7 +71,7 @@
       <el-col :span="8">
         <el-button :disabled="goOut" @click="outVisible = true" plain type="info">外出</el-button>
         <el-dialog :visible.sync="outVisible" title="外出登记">
-          <out_dialog v-on:outId="getOutId" :data="this.id"/>
+          <out_dialog :data="this.id"/>
         </el-dialog>
       </el-col>
       <el-col :span="8">
@@ -106,7 +106,6 @@ export default {
   data() {
     return {
       outVisible: false,
-      out_id: '',
       backVisible: false,
       goOut: false,
       back: true,
@@ -162,11 +161,7 @@ export default {
     }
   },
   methods: {
-    getOutId(id) {
-      this.out_id = id
-      localStorage.setItem(this.id, this.out_id)
-      console.log(this.out_id)
-    }
+
   },
   mounted() {
     this.id = this.customer.id

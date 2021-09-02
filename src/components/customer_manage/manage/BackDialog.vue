@@ -37,6 +37,7 @@ export default {
     data(newVal) {
       this.id = newVal
       this.form.id = newVal
+      this.form.id = localStorage.getItem(newVal)
     }
   },
   methods: {
@@ -50,17 +51,18 @@ export default {
             message: '更新成功',
             type: 'success'
           });
+          location.reload()
         } else {
           this.$message.error('提交失败');
         }
       })
-      location.reload()
     }
   },
   mounted() {
-    console.log(this.data)
+    this.form.id = localStorage.getItem(this.data)
     this.id = this.data
     this.form.id = this.id
+    console.log(localStorage.getItem(this.data))
   }
 }
 </script>
