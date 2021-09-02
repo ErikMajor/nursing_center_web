@@ -1,7 +1,10 @@
 <template>
   <el-form ref="form" :model="form" label-position="left" label-width="80%" size="mini">
     <el-form-item label="备注信息" size="medium">
-      <el-input v-model="form.remarks" disabled></el-input>
+      <el-input v-model="form.remarks"
+                :autosize="{ minRows: 2, maxRows: 4}"
+                placeholder="请输入内容"
+                type="textarea"></el-input>
     </el-form-item>
     <el-form-item label="实际回院时间" size="medium">
       <el-date-picker
@@ -24,7 +27,7 @@ export default {
     return {
       id: '',
       form: {
-        id: '',
+        id: this.data,
         remarks: '',
         actualReturntime: ''
       }
@@ -39,6 +42,8 @@ export default {
   methods: {
     submit() {
       let url = 'http://localhost:8081/registration/back'
+      this.form.id = localStorage.getItem(this.data)
+      console.log(this.form.id)
       this.$ajax.post(url, this.form).then(res => {
         if (res.data.state === "true") {
           this.$message({
@@ -53,6 +58,7 @@ export default {
     }
   },
   mounted() {
+    console.log(this.data)
     this.id = this.data
     this.form.id = this.id
   }

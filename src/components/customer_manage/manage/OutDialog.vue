@@ -40,7 +40,7 @@
       </el-input>
     </el-form-item>
     <el-form-item>
-      <el-button v-on:click="outId" type="primary" @click="submit">确认</el-button>
+      <el-button type="primary" @click="submit">确认</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -74,19 +74,19 @@ export default {
       let url = 'http://localhost:8081/registration/out'
       this.$ajax.post(url, this.form).then(res => {
         if (res.data.state === "true") {
+          this.out_id = res.data.id
+          console.log(this.out_id)
           this.$message({
             message: '添加成功',
             type: 'success'
           });
+          this.$emit('outId', this.out_id)
         } else {
           this.$message.error('提交失败');
         }
       })
       location.reload()
     },
-    outId() {
-      this.$emit('outId', )
-    }
   },
   mounted() {
     this.id = this.data

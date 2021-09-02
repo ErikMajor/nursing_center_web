@@ -77,7 +77,7 @@
       <el-col :span="8">
         <el-button :disabled="back" @click="backVisible = true" plain type="info">登记回院</el-button>
         <el-dialog :visible.sync="backVisible" title="登记回院">
-          <back_dialog :data="this.out_id"/>
+          <back_dialog :data="this.id"/>
         </el-dialog>
       </el-col>
       <el-col :span="8">
@@ -138,6 +138,7 @@ export default {
 
   },
   watch: {
+
     data(newVal) {
       this.customer = newVal
       this.id = newVal.id
@@ -163,6 +164,8 @@ export default {
   methods: {
     getOutId(id) {
       this.out_id = id
+      localStorage.setItem(this.id, this.out_id)
+      console.log(this.out_id)
     }
   },
   mounted() {
